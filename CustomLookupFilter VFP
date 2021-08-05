@@ -1,0 +1,21 @@
+<apex:page controller="CustomController" docType="html-5.0">
+    <apex:form >
+        <apex:pageBlock >
+            <apex:pageBlockSection columns="1">
+                <apex:inputField value="{!con.CustomAccount__c}" label="Account"/>
+                <apex:inputField value="{!con.CustomAccount2__c}" label="Parent2" />
+                Start Date: <apex:input type="date" value="{!startDate}" />
+                End Date  : <apex:input type="date" value="{!endDate}"/>
+                <apex:commandButton action="{!displayContacts}" value="Show Filtered Contacts"/>
+                <!--<apex:commandButton action="{!displayContacts2}" value="Show Filtered Contacts2"/>-->
+            </apex:pageBlockSection>
+            <apex:pageBlockSection title="Contacts Related to Account" collapsible="false">
+                <apex:pageBlockTable value="{!conList}" var="varCon" >
+                    <apex:column headerValue="Name" value="{!varCon.Name}" />
+                    <apex:column headerValue="Email" value="{!varCon.Email__c}" />
+                    <apex:column headerValue="Created Date" value="{!varCon.CreatedDate}" />
+                </apex:pageBlockTable>
+            </apex:pageBlockSection>
+        </apex:pageBlock>    
+    </apex:form>
+</apex:page>
