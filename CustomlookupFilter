@@ -1,0 +1,37 @@
+public class CustomController {        
+    public ID accID{get;set;}
+    public Date startDate {get;set;}
+    public Date endDate {get;set;}
+    public List<CusomContact__c> conList{get;set;}
+    public CusomContact__c con{get;set;}
+    
+    public CustomController(){
+        conList=[select id,name,Email__c,Phone__c,CreatedDate From CusomContact__c ];
+        con=new CusomContact__c();
+    }
+    public PageReference displayContacts(){
+        if(conList!=null){
+            conList.clear();
+        }
+        system.debug('accName+++'+con.CustomAccount__c);
+        conList=new List<CusomContact__c>();
+        if(con.CustomAccount__c!=null && con.CustomAccount2__c==null){
+            for(CusomContact__c con1:[select id,name,Email__c,Phone__c,CreatedDate From CusomContact__c 
+                                      where CreatedDate>=:startDate AND CreatedDate<=:endDate AND CustomAccount__c =:con.CustomAccount__c]){
+                                          conList.add(con1);
+                                      }
+        }else IF(con.CustomAccount__c==null && con.CustomAccount2__c!=null){
+            for(CusomContact__c con1:[select id,name,Email__c,Phone__c,CreatedDate From CusomContact__c 
+                                      where CreatedDate>=:startDate AND CreatedDate<=:endDate AND CustomAccount2__c =:con.CustomAccount2__c]){
+                                          conList.add(con1);
+                                      }   
+        }else IF(con.CustomAccount__c!=null && con.CustomAccount2__c!=null){
+            for(CusomContact__c con1:[select id,name,Email__c,Phone__c,CreatedDate From CusomContact__c 
+                                      where CreatedDate>=:startDate AND CreatedDate<=:endDate AND CustomAccount__c =:con.CustomAccount__c AND CustomAccount2__c =:con.CustomAccount2__c]){
+                                          conList.add(con1);
+                                      }  
+                    system.debug('conList++'+conList);
+        }      
+        return null;
+    }
+}
